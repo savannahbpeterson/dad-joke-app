@@ -2,16 +2,11 @@ let savedJokes = [];
 let id = 0;
 
 module.exports = {
-    // this is the get
     getJoke: (req, res) => {
-        console.log(allJokes)
         res.status(200).send(allJokes)
     },
     //this is the post
-    addJoke: (req, res) => {
-        console.log('this is working')
-        console.log(req.body);
-        
+    addJoke: (req, res) => {        
         req.body.id = id;
         id++;
         savedJokes.push(req.body)
@@ -19,22 +14,29 @@ module.exports = {
     },
     //this is the put
     updateJoke: (req, res) => {
+        let {text} = req.body
         const {id} = req.params;
-        const {body} = req;
-
+        let updatedJokes = [];
         
-        // jokes = jokes.map((joke) => {
-        //     if(joke.id === +id) {
-                
-        //     }
-        // })
+         savedJokes.map((joke) => {
+            if(joke.id === +id){
+
+                joke.myJokes= text;
+                updatedJokes.push(joke)
+            }else{
+                updatedJokes.push(joke)
+            }
+        })
+
+        res.status(200).send(updatedJokes)
 
     },
     //obviously the delete
     deleteJoke: (req, res) => {
             savedJokes = savedJokes.filter((joke) => {
                 joke.id !== +req.params.id
-                res.status(200).send(jokes)
+                
             })
+            res.status(200).send(savedJokes)
         }
     }

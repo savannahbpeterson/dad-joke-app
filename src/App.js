@@ -15,10 +15,6 @@ class App extends Component {
     }
   }
 
-  // componentDidMount(){
-  //   axios.get('/api/whatever')
-  // }
- 
   render() {
     return (
       <div className="App">

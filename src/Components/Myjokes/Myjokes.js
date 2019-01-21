@@ -10,11 +10,14 @@ class Myjokes extends Component {
         super()
         this.state = {
             myJokes: [],
-            editMode: false
+            editMode: false,
+            text: ''
         }
     }
+
+
+
     handleSave() {
-        //    console.log (this.props)
         axios.post('/savejoke', this.props)
             .then(response => {
                 console.log(response.data)
@@ -22,19 +25,59 @@ class Myjokes extends Component {
 
             })
     }
-    handleUpdateJoke() {
-        axios.put('/editjoke')
-    }
-    handleEdit() {
+
+    // handleUpdateJoke() {
+    //     let textObj = {
+    //         text: this.state.text
+    //     };
+    //     console.log(textObj)
+    //     axios.put('/editjoke', textObj)
+    //     .then(response => {
+    //         this.setState({myJokes: response.data})
+    //     })
+    // }
+
+    handleEdit(id) {
+        let textObj = {
+               text: this.state.text
+                 };
         this.setState({ editMode: !this.state.editMode })
+        axios.put('/updateJoke/' + id, textObj)
+        .then( response => {
+            this.setState({myJokes: response.data})
+        })
     }
-    handleDeleteJoke() {
-        axios.delete('/deleteJoke')
+
+    handleDeleteJoke(id) {
+        axios.delete('/deleteJoke/' + id)
+        .then(response => {
+            this.setState({myJokes: response.data})
+        })
     }
+
+    editName(text){
+        this.setState({text: text})
+    }
+
+
     render() {
         let mappedJokes = this.state.myJokes.map((element) => {
             return (
-                <h1>{element.myJokes}</h1>
+                <div><h1>{element.myJokes}</h1>
+                <button onClick={() => this.handleDeleteJoke(element.id)} 
+                style={{ marginTop: 30, height: 40, width: 150, background: 'lightyellow', border: 'dotted', borderRadius: 15, fontSize: 20 }}> DELETE JOKE</button>
+                {this.state.editMode
+                    ?
+                    <div>
+                        <button onClick={() => this.handleEdit(element.id)} 
+                        style={{ marginTop: 30, height: 40, width: 150, background: 'lightyellow', border: 'dotted', borderRadius: 15, fontSize: 24 }}>SUBMIT</button>
+                        <input type="text" onChange={(e) => this.editName(e.target.value)} 
+                        style={{ height: 35, border: 'dotted', borderRadius: 15, fontSize: 24 }} />
+                    </div>
+                    :
+                    ''}
+                </div>
+                
             )
         })
         return (
@@ -45,15 +88,8 @@ class Myjokes extends Component {
                 </button>
                 <button onClick={() => this.handleEdit()}
                     style={{ marginTop: 30, height: 40, width: 150, background: 'lightyellow', border: 'dotted', borderRadius: 15, fontSize: 24 }}>EDIT JOKE</button>
-                {this.state.editMode
-                    ?
-                    <div>
-                        <button onClick={() => this.handleEdit()} style={{ marginTop: 30, height: 40, width: 150, background: 'lightyellow', border: 'dotted', borderRadius: 15, fontSize: 24 }}>SUBMIT</button>
-                        <input type="text" style={{ height: 35, border: 'dotted', borderRadius: 15, fontSize: 24 }} />
-                    </div>
-                    :
-                    <h4>{mappedJokes}</h4>}
-                <button onClick={() => this.handleDeleteJoke()} style={{ marginTop: 30, height: 40, width: 150, background: 'lightyellow', border: 'dotted', borderRadius: 15, fontSize: 20 }}> DELETE JOKE</button>
+                
+                <ul>{mappedJokes}</ul>
                 <span></span>
                 <Header />
             </div>
