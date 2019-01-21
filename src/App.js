@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import axios from 'axios';
+// import axios from 'axios';
 
 //COMPONENTS
 import Header from './Components/Header/Header'
 import Getjoke from './Components/Getjoke/Getjoke'
-import Myjokes from './Components/Myjokes/Myjokes'
+
 
 class App extends Component {
   constructor(){

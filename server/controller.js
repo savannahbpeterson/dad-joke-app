@@ -32,6 +32,9 @@ module.exports = {
     },
     //obviously the delete
     deleteJoke: (req, res) => {
-
+            savedJokes = savedJokes.filter((joke) => {
+                joke.id !== +req.params.id
+                res.status(200).send(jokes)
+            })
+        }
     }
-}

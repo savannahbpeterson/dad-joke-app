@@ -28,7 +28,7 @@ class Getjoke extends Component {
         return(
             <div>
                 <button onClick = {() => this.componentDidMount ()} 
-                style={{ marginTop: 30, height: 40, width: 150, background: 'lightyellow', borderRadius: 15, fontSize: 24 }}>GET JOKE</button>
+                style={{ marginTop: 30, height: 40, width: 150, border: 'dotted',  background: 'lightyellow', borderRadius: 15, fontSize: 24 }}>GET JOKE</button>
                 <h1>{this.state.jokes}</h1>
                 <Myjokes myJokes={this.state.jokes}/>
                 
